@@ -1,24 +1,40 @@
 <div>
   <div class="container">
-    <h1><%= "Best #{@list.name}" %></h1>
-    <div class="mt-4"><%= link_to "Add a movie to this list", new_list_bookmark_path(@list), class: "btn btn-banner" %></div>
+    <h1><%= "The list #{@list.name}" %></h1>
+    <div class="row">
+      <div class="col-sm-10">
+        <div><%= link_to "Add a movie to #{@list.name} list ", new_list_bookmark_path(@list), class: "btn btn-warning" %></div>
+      </div>
+      <div class="col-sm-2">
+        <p><%= link_to "Back", lists_path(), class: "btn btn-outline-warning" %></p>
+    </div>
   </div>
-  <div class="bookmarks container">
-    <% @list.bookmarks.each do |bookmark| %>
-      <% url = "https://image.tmdb.org/t/p/w1#{bookmark.movie.poster_url}" %>
-        <%= image_tag url, alt: "poster" %>
-        <div class="bookmark-body">
-          <h5 class="card-title font-weight-bold"><%= bookmark.movie.title %></h5>
-          <p class="card-text"><%= bookmark.movie.overview %></p>
-          <p>---------------------</p>
-          <p><%= "Comment :'#{bookmark.comment}'" %></p>
-          <p><strong><%= "Rating: #{bookmark.movie.rating}" %></strong></p>
-          <div class="bookmark-body-icon">
-            <%= link_to bookmark_path(bookmark), method: :delete, data: { confirm: 'Are you sure you want to remove this movie?' } do %>
-              <strong><i class="far fa-trash-alt" height= 100px></i></strong>
-            <% end %>
+  <hr>
+  <div class="bookmarks container ">
+    <div class="row">
+      <% @list.bookmarks.each do |bookmark| %>
+        <div class="col">
+          <% url = "https://image.tmdb.org/t/p/w1#{bookmark.movie.poster_url}" %>
+          <%= image_tag url, alt: "poster", width: "300px" %>
+        </div>
+        <div class="col">
+          <div class="bookmark-body">
+            <h5 class="card-title font-weight-bold"><%= bookmark.movie.title %></h5>
+            <p><%= bookmark.movie.overview %></p>
+            <hr>
+            <p><%= "Comment :'#{bookmark.comment}'" %></p>
+            <p><strong><%= "Rating: #{bookmark.movie.rating}" %></strong></p>
+            <div class="bookmark-body-icon">
+              <%= link_to bookmark_path(bookmark), method: :delete, data: { confirm: 'Are you sure you want to remove this movie?' } do %>
+                <strong class="far fa-trash-alt"></strong>
+              <% end %>
+              <br>
+              <hr>
+              <br>
+            </div>
           </div>
         </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
